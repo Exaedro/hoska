@@ -1,0 +1,157 @@
+@import url('global.css');
+
+:root {
+    --color-texto: #000000;
+    --color-texto-secundario: #8A8FB2;
+    --color-link: #6e7ff1;
+    --color-fondo: #FFFFFF;
+    --color-fondo-secundario: #B5CCBE;
+    --color-boton: #4B5563;
+    --color-boton-hover: #414955;
+    --color-borde: #E4E4E7;
+    --color-borde-hover: #8A8FB2;
+    --color-error: #FF0000;
+}
+
+.login-contenedor {
+    display: flex;
+    height: 100vh;
+}
+
+.login-contenedor h1 {
+    font-size: 48px;
+    font-weight: 500;
+}
+
+.login-contenedor h2 {
+    margin-top: 14px;
+    font-size: 24px;
+    font-weight: 300;
+    color: var(--color-texto-secundario);
+    margin-bottom: 40px;
+}
+
+.formulario {
+    min-width: 453px;
+}
+
+.formulario .fila {
+    display: flex;
+    gap: 14px;
+}
+
+.formulario .campo {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 24px;
+    position: relative;
+}
+
+.formulario label {
+    text-align: left;
+    font-size: 16px;
+    font-weight: 300;
+    color: var(--color-texto-secundario);
+    margin-bottom: 10px;
+}
+
+.formulario input {
+    border-radius: 4px;
+    border: 2px solid var(--color-borde);
+    padding: 10px 16px;
+    outline: none;
+}
+
+.formulario input:focus {
+    border: 2px solid var(--color-borde-hover);
+}
+
+.formulario button, .espera-contenedor a {
+    text-decoration: none;
+    border-radius: 4px;
+    background-color: var(--color-boton);
+    color: white;
+    padding: 10px 20px;
+    width: 100%;
+    outline: none;
+    cursor: pointer;
+    transition: 0.3s ease background;
+}
+
+.formulario button:hover, .espera-contenedor a:hover {
+    background-color: var(--color-boton-hover);
+}
+
+.formulario hr {
+    margin: 24px 0;
+    border: 1px solid var(--color-borde);
+}
+
+.formulario a {
+    color: var(--color-link);
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 300;
+}
+
+.izquierda {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-fondo-secundario);
+    width: 50vw;
+}
+
+.derecha {
+    width: 50vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+}
+
+.izquierda .logo {
+    object-fit: cover;
+    width: 528px;
+    height: 582px;
+}
+
+#alternar {
+    position: absolute;
+    cursor: pointer;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 15px;
+}
+
+/* //////// SALA DE ESPERA //////// */
+
+.fondo-partido {
+    background: linear-gradient(90deg, var(--color-fondo-secundario) 50%, var(--color-fondo) 30%);
+}
+
+.espera-contenedor {
+    border: 1px solid var(--color-borde);
+    background-color: var(--color-fondo);
+    width: 700px;
+    text-align: center;
+    text-wrap: balance;
+    padding: 50px 80px 80px 80px;
+    border-radius: 10px;
+}
+
+.espera-contenedor h1 {
+    font-size: 48px;
+    font-weight: 500;
+    margin-bottom: 20px;
+}
+
+.espera-contenedor p {
+    font-size: 24px;
+    font-weight: 300;
+}
+
+.espera-contenedor .botones {
+    margin-top: 40px;
+}

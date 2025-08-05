@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="es" data-id_usuario="<%- usuario.id_usuario %>" data-nombre="<%- usuario.nombre %>" data-apellido="<%- usuario.apellido %>" data-tipo_usuario="<%- usuario.tipo_usuario %>">
+<head>
+    <%- include('../parciales/head.html') %>
+    <link rel="stylesheet" href="panel.css">
+    <link rel="stylesheet" href="alertas.css">
+
+    <!-- ICONOS (Font Awesome) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <!-- ANIMACIONES (Animate.css) -->
+    <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    
+    <!-- SOCKET.IO -->
+    <script type="module" src="/socket.io/socket.io.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@4.0.2/dist/timeago.min.js"></script>
+
+    <script type="module" src="js/panel/preceptor.js"></script>
+</head>
+<body>
+    <audio id="notificacion" src="sonidos/noti.wav" preload="auto"></audio>
+
+    <div class="panel-contenedor">
+        <div class="columna columna-izquierda">
+            <div class="titulo">
+                <h1>Auka</h1>
+            </div>
+            <div class="historial">
+                <p class="historial-titulo">Historial de llamados</p>
+
+                <div class="historial-contenedor">
+
+                    <% if(llamados !== null) { %>
+                        <% for(let i = 0; i < llamados.length && i < 6; i++) { %>
+                            <% if(llamados[i].finalizado == 1) { %>
+        
+                                <div class="historial-item">
+                                    <div>
+                                        <div class="historial-item-cabecera">
+                                            <p class="historial-item-titulo">
+                                                <%= llamados[i].nombre %> <%= llamados[i].apellido %>
+                                            </p>
+                                            <p class="historial-item-hora">
+                                                <%= formatoHora(llamados[i].fecha_envio) %>
+                                            </p>
+                                        </div> 
+                                        <div class="historial-item-mensaje">
+                                            <p class="historial-item-texto">
+                                                <%= llamados[i].mensaje %>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="historial-item-pie">
+                                        <p class="historial-item-estado <%= llamados[i].cancelado == 1 ? 'historial-estado-cancelado' : 'historial-estado-finalizado' %>">
+                                            <span class="historial-item-estado-texto">
+
+                                                <% if(llamados[i].cancelado == 1) { %>
+                                                    Cancelado
+                                                <% } else { %>
+                                                    Finalizado
+                                                <% } %>
+
+                                            </span>
+                                        </p>
+                                    </div>
+                                </div>
+
+                            <% } %>
+                        <% } %>
+                    <% } %>
+
+                </div>
+            </div>
+        </div>
+        <div class="llamados">
+            <% if(llamados !== null && llamados.filter(llamado => llamado.finalizado == 0).length > 0) { %>
+                <% llamados.forEach(llamado => { %>
+                    <% if(llamado.finalizado == 0) { %>
+
+                        <% const niveles = ['leve', 'moderado', 'urgente'] %>
+                        <% const nivel = niveles[llamado.numero_nivel - 1] %>
+
+                        <div class="llamado <%= nivel %>" data-llamado_id="<%= llamado.id_llamado %>" data-usuario_id="<%= llamado.id_emisor %>" data-usuario_nombre="<%= llamado.nombre %>" data-usuario_apellido="<%= llamado.apellido %>" data-mensaje="<%= llamado.mensaje %>">  
+                            <div class="llamado-cabecera">
+                                <p class="llamado-titulo"><%= llamado.nombre %> <%= llamado.apellido %></p>
+                                <p class="llamado-mensaje"><%= llamado.mensaje %></p>
+                            </div>
+                            <hr>
+                            <div class="llamado-cuerpo">
+                                <p><span class="llamado-cuerpo-texto">Llamado - <span class="fecha-envio" datetime="<%= llamado.fecha_envio %>"><%= formato(llamado.fecha_envio) %></span></span></p>
+                            </div>
+                            <% if(llamado.id_preceptor === null || typeof llamado.id_preceptor == 'undefined') { %>
+                                <div class="llamado-respuestas">
+                                    <p class="respuesta" data-usuario_id="<%= llamado.id_emisor %>">Yendo</p>
+                                    <p class="respuesta" data-usuario_id="<%= llamado.id_emisor %>">En camino</p>
+                                    <p class="respuesta" data-usuario_id="<%= llamado.id_emisor %>">Enseguida</p>
+                                    <p class="respuesta" data-usuario_id="<%= llamado.id_emisor %>">Voy para allá</p>
+                                    <p class="respuesta-personalizada">Respuesta personalizada</p>
+                                </div>
+                                <div data-usuario_id="<%= llamado.id_emisor %>" class="esconder respuesta-personalizada-contenedor">
+                                    <input type="text" name="respuesta-personalizada" class="respuesta-personalizada-input" placeholder="Escribe aquí tu respuesta..." maxlength="150">
+                                    <div class="botones">
+                                        <button type="button" class="boton-respuesta-personalizada">Enviar</button>
+                                        <button type="button" class="boton-cancelar-respuesta-personalizada">Cancelar</button>
+                                    </div>
+                                </div>
+                            <% } else { %> 
+                                <% if(llamado.id_preceptor == usuario.id_usuario) { %>
+                                    <div class="llamado-respuestas">
+                                        <p class="respuesta respuesta-terminado">Terminado</p>
+                                    </div>
+                                <% } %>
+                            <% } %> 
+                        </div>
+                    <% } %>
+                <% }) %>
+                <div class="no-hay-llamados esconder">
+                    <h1>No hay llamados pendientes.</h1>
+                </div>
+            <% } else { %>
+                <div class="no-hay-llamados">
+                    <h1>No hay llamados pendientes.</h1>
+                </div>
+            <% } %>
+        </div>
+        <div class="columna columna-derecha">
+            <div class="preceptores">
+                <p class="preceptores-titulo">Preceptores disponibles</p>
+
+                <div class="preceptores-contenedor">
+                    <% if((typeof turnos !== 'undefined' && turnos !== null) && turnos.length > 0) { %>
+                        <% turnos.forEach(turno => { %>
+                            <div class="preceptores-item">
+                                <img src="img/user.png" alt="">
+                                <p><%= turno.nombre_usuario %> <%= turno.apellido_usuario %></p>
+                            </div>
+                        <% }) %>
+                    <% } else { %>
+                        <p class="no-hay-preceptores">No hay preceptores disponibles.</p>
+                    <% } %>
+                </div>
+            </div>
+            <div class="perfil">
+                <hr>
+                <div class="perfil-info">
+                    <p class="perfil-siglas"><%- usuario.nombre[0] %><%- usuario.apellido[0] %></p>
+                    <div class="perfil-usuario">
+                        <p class="perfil-nombre"><%- usuario.nombre %> <%- usuario.apellido %></p>
+                        <p class="perfil-tipo-usuario"><%- usuario.tipo_usuario %></p>
+                    </div>
+                </div>
+                <a class="perfil-cerrar-sesion" href="/logout"><i class="fa-solid fa-right-from-bracket"></i>Cerrar sesión</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

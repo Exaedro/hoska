@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <%- include('../parciales/head.html') %>
+    <link rel="stylesheet" href="logeo.css">
+    <link rel="stylesheet" href="alertas.css">
+
+    <!-- ICONOS (Font Awesome) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
+    <!-- ANIMACIONES (Animate.css) -->
+    <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+</head>
+<body>
+    <div class="login-contenedor">
+        <div class="izquierda">
+            <img src="img/logo.png" alt="Logo de la EESTN°1" class="logo">
+        </div>
+        <div class="derecha">
+            <h1>Auka</h1>
+            <h2>Bienvenido de nuevo</h2>
+            <form id="formulario" action="/entrar" method="POST" class="formulario">
+                <% if(error === 'usuario_no_existe') { %>
+                    <div class="bloque-error">
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                        <p>No existe ningun usuario con ese email</p>
+                    </div>
+                <% } else if(error === 'contrasena_incorrecta') { %>
+                    <div class="bloque-error">
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                        <p>La contraseña es incorrecta</p>
+                    </div>
+                <% } %>
+                <div class="campo">
+                    <label for="email">Email</label>
+                    <input type="email" name="email" id="email">
+                </div>
+                <div class="campo">
+                    <label for="contrasena">Contraseña</label>
+                    <div class="campo" style="margin-bottom: 0;">
+                        <input type="password" name="contrasena" id="contrasena">
+                        <i class="fa-solid fa-eye alternar-contrasena" id="alternar" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer;"></i>
+                    </div>
+                </div>
+                <button type="submit">Entrar</button>
+                <hr>
+                <a href="/solicitud">¿No tienes una cuenta? Solicita una pulsando aquí</a>
+            </form>
+        </div>
+    </div>   
+    <script src="js/formularios/iniciar_sesion.js" type="module"></script>
+    <script src="js/formularios/alternarVisibilidadContrasena.js" type="module"></script>
+</body>
+</html>

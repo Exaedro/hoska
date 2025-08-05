@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="es" data-id_usuario="<%- usuario.id_usuario %>" data-nombre="<%- usuario.nombre %>"
+  data-apellido="<%- usuario.apellido %>" data-tipo_usuario="<%- usuario.tipo_usuario %>">
+
+<head>
+  <%- include('../parciales/head.html') %>
+    <link rel="stylesheet" href="alertas.css" />
+    <link rel="stylesheet" href="directivos.css" />
+
+    <!-- ICONOS (Font Awesome) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+    <!-- ANIMACIONES (Animate.css) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+
+    <!-- SOCKET.IO -->
+    <script type="module" src="/socket.io/socket.io.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/timeago.js@4.0.2/dist/timeago.min.js"></script>
+
+    <script type="module" src="js/panel/directivos.js"></script>
+</head>
+
+<body>
+  <div class="layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="logo">
+        <div class="logo-icon">A</div>
+        <div class="logo-text">
+          <h1>Auka</h1>
+          <span>Panel de Monitoreo</span>
+        </div>
+      </div>
+
+      <nav class="nav">
+        <span>Navegación</span>
+        <ul class="nav-list">
+          <li>
+            <a href="/"><i class="fas fa-home"></i> <span>Dashboard</span></a>
+          </li>
+          <li class="active">
+            <a href="/panel/directivos"><i class="fas fa-phone-alt"></i> <span>Llamados</span></a>
+          </li>
+          <li>
+            <a href="/panel/administracion"><i class="fa-solid fa-gear"></i> <span>Administración</span></a>
+          </li>
+          <li>
+            <a href="/panel/analisis"><i class="fa-solid fa-chart-column"></i> <span>Análisis</span></a>
+          </li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- Contenido principal -->
+    <div class="main-content">
+      <header class="header">
+        <div class="menu-icon">
+          <img src="img/icon.svg" alt="">
+        </div>
+
+        <div class="logo1">
+          <div class="logo-icon1">A</div>
+          <span class="logo-text1">Auka</span>
+        </div>
+      </header>
+
+      <main class="main-panel">
+        
+        <div class="header-llamados">
+          <h2>Gestión de Llamados</h2>
+          <div class="exportar">
+            <button id="boton-exportar" class="boton-exportar"><i class="fa-solid fa-file-export"></i> Exportar</button>
+          </div>
+        </div>
+        <div class="search-filters">
+          <h3><i class="fas fa-filter"></i> Filtros de Búsqueda</h3>
+          <div class="filters-row">
+            <!-- Búsqueda general -->
+            <div class="filter">
+              <i class="fas fa-search"></i>
+              <input type="text" id="searchInput" placeholder="Buscar por profesor, mensaje, curso" />
+            </div>
+
+            <!-- Filtro por estado -->
+            <div class="filter">
+              <select id="statusFilter">
+                <option value="">Estado</option>
+                <option value="pendiente">Pendiente</option>
+                <option value="finalizado">Finalizado</option>
+                <option value="cancelado">Cancelado</option>
+              </select>
+            </div>
+
+            <!-- Filtro por prioridad -->
+            <div class="filter">
+              <select id="priorityFilter">
+                <option value="">Prioridad</option>
+                <option value="alta">Alta</option>
+                <option value="media">Media</option>
+                <option value="baja">Baja</option>
+              </select>
+            </div>
+
+            <!-- Filtro por fecha -->
+            <div class="filter">
+              <input type="date" id="dateFilter" />
+            </div>
+
+            <!-- Botón para limpiar filtros -->
+            <button id="clearFilters" class="boton-limpiar">
+              <i class="fa-solid fa-filter-circle-xmark"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="calls-container">
+          <div class="calls-header">
+            <i class="fa-solid fa-phone"></i><h3>Listado de llamados</h3>
+          </div>
+
+          <div class="calls-table">
+
+            <table>
+              <thead>
+                <tr>
+                  <th>Fecha/Hora</th>
+                  <th>Curso</th>
+                  <th>Emisor</th>
+                  <th>Mensaje</th>
+                  <th>Estado</th>
+                  <th>Prioridad</th>
+                  <th>Preceptor</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% (llamadosResultado || []).forEach(llamado => { %>
+                  <tr>
+                    <td>
+                      <div class="call-date">
+                        <%= new Date(llamado.fecha_envio).toLocaleDateString('es-AR', {
+                          year: 'numeric',
+                          month: '2-digit',
+                          day: '2-digit'
+                        }) %>
+                      </div>
+                      <div class="call-time">
+                        <%= new Date(llamado.fecha_envio).toLocaleTimeString('es-AR', {
+                          hour: 'numeric',
+                          minute: 'numeric'
+                        }) %>
+                      </div>
+                    </td>
+                    
+                    <td>
+                      <div class="call-grade">
+                        <%= llamado.curso %>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="emisor">
+                        <%= llamado.nombre %>
+                      </div>
+                    </td>
+                    <td class="call-message">
+                      <%= llamado.mensaje %>
+                    </td>
+                    <td>
+                      <% let statusClass='status-pendiente' ; let statusText='Pendiente' ; if (llamado.cancelado==1) {
+                        statusClass='status-cancelado' ; statusText='Cancelado' ; } else if (llamado.finalizado==1) {
+                        statusClass='status-finalizado' ; statusText='Finalizado' ; } %>
+                        <span class="status-badge <%= statusClass %>">
+                          <%= statusText %>
+                        </span>
+                    </td>
+                    <td>
+                      <% let priorityClass='priority-low' ; let priorityText='Baja' ; if (llamado.prioridad==='media' )
+                        { priorityClass='priority-medium' ; priorityText='Media' ; } else if (llamado.prioridad==='alta'
+                        ) { priorityClass='priority-high' ; priorityText='Alta' ; } %>
+                        <div class="priority-badge <%= priorityClass %>">
+                          <%= priorityText %>
+                        </div>
+                    </td>
+                    <td>
+                      <%= llamado.nombre %>
+                    </td>
+                    <td>
+                      <button class="action-btn">
+                        <i class="fa-solid fa-eye"></i>
+                      </button>
+                    </td>
+                  </tr>
+                <% }) %>
+
+              </tbody>
+            </table>
+          </div>
+          <% if (!(llamadosResultado && llamadosResultado.length > 0)) { %>
+            <div class="no-hay-llamados">
+              No hay llamados.
+            </div>
+          <% } %>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <div id="detalleLlamadoModal" class="modal-llamado" style="display:none;">
+    <div class="modal-llamado-content">
+      <button class="modal-llamado-close" id="cerrarDetalleLlamado">&times;</button>
+      <div id="detalleLlamadoContenido">
+        <!-- Aquí se cargará el detalle dinámicamente -->
+      </div>
+    </div>
+  </div>
+
+  <div id="notificacion" class="alerta animate__animated animate__fadeInRight" style="display: none;">
+    <i id="notificacionIcono"></i>
+    <span id="notificacionMensaje"></span>
+  </div>
+
+</body>
+
+<script src="./js/panel/directivos.js"></script>
+
+</html>
