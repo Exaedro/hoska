@@ -1,20 +1,20 @@
 @import url("global.css");
 
 :root {
-  --color-fondo: #f3f4f6;
-  --color-fondo-secundario: #eff6ff;
-  --color-borde: #e5e7eb;
+  --color-fondo: #F9FAFB;
+  --color-fondo-secundario: #FFFFFF;
+  --color-borde: #E2E8F0;
 
-  --color-texto: #000000;
-  --color-texto-secundario: #686868;
+  --color-texto: #2D3748;
+  --color-texto-secundario: #718096;
 
-  --color-estado-finalizado: #4de04d;
-  --color-estado-cancelado: #ff0000;
-  --color-estado-derivado: #ffa515;
+  --color-estado-finalizado: #27AE60;
+  --color-estado-cancelado: #EB5757;
+  --color-estado-derivado: #F2994A;
 
   --color-fondo-llamado: #ffffff;
   /* COLOR LEVE */
-  --color-primario-llamado: #4de04d;
+  --color-primario-llamado: #27AE60;
   --color-fondo-llamado-moderado: #f87943;
   --color-primario-llamado-moderado: #ffae3d;
   --color-fondo-llamado-urgente: #ff5959;
@@ -23,7 +23,7 @@
   --color-fondo-respuesta: #dbeafe;
   --color-texto-respuesta: #4f63eb;
 
-  --color-boton: #09f;
+  --color-boton: #2F80ED;
   --color-boton-hover: rgb(11, 110, 223);
   --color-boton-cancelar: #ff0000;
 

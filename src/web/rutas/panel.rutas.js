@@ -20,7 +20,7 @@ panelRutas.get('/panel/preceptor', [estaLogeado, esPreceptor], async (req, res) 
     const turnosResultado = await peticion({ url: `${API_URL}/turnos/hora/${hora_actual}`, metodo: 'GET' })
     const turnos = await turnosResultado.json()
 
-    res.render('paneles/preceptor', { titulo: 'AUKA - Panel', usuario, llamados, turnos })
+    res.render('paneles/preceptor', { titulo: 'HOSKA - Panel', usuario, llamados, turnos })
 })
 
 panelRutas.get('/panel/profesor', [estaLogeado, esProfesor], async (req, res) => {
@@ -64,7 +64,7 @@ panelRutas.get('/panel/profesor', [estaLogeado, esProfesor], async (req, res) =>
         cursos
     }
 
-    res.render('paneles/profesor', { titulo: 'AUKA - Panel', usuario, llamado: objetoLlamado, turnos })
+    res.render('paneles/profesor', { titulo: 'HOSKA - Panel', usuario, llamado: objetoLlamado, turnos })
 })
 
 export default panelRutas

@@ -1,6 +1,6 @@
-# Pruebas Unitarias - Proyecto Auka
+# Pruebas Unitarias - Proyecto Hoska
 
-Este directorio contiene todas las pruebas unitarias del proyecto Auka, organizadas de manera estructurada para facilitar el mantenimiento y la comprensión del código.
+Este directorio contiene todas las pruebas unitarias del proyecto Hoska, organizadas de manera estructurada para facilitar el mantenimiento y la comprensión del código.
 
 ## 📁 Estructura de Directorios
 
