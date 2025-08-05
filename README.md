@@ -1,4 +1,4 @@
-# Auka
+# Hoska
 
 Aplicación para mejorar la comunicación entre el personal de las instituciones educativas. 
 
@@ -29,7 +29,7 @@ Para ejecutar este proyecto localmente, debes cambiar las siguientes variables d
 
 `BD_PUERTO = 3306`
 
-`BD_BASE = auka`
+`BD_BASE = hoska`
 
 
 ## Ejecutarlo localmente
@@ -37,13 +37,13 @@ Para ejecutar este proyecto localmente, debes cambiar las siguientes variables d
 Clona el proyecto
 
 ```bash
-  git clone https://github.com/Exaedro/auka
+  git clone https://github.com/Exaedro/hoska
 ```
 
 Ve a la carpeta del proyecto
 
 ```bash
-  cd auka
+  cd hoska
 ```
 
 Instala las dependencias
