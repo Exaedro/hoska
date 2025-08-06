@@ -1,38 +1,52 @@
-# Hoska
 
-Aplicación para mejorar la comunicación entre el personal de las instituciones educativas. 
+# HOSKA
+
+_Propuesta para optimizar y escalar AUKA_: **HOSKA**.
+
+HOSKA es una aplicación multiplataforma diseñada para agilizar y mejorar la eficiencia de la comunicación entre todo el personal hospitalario. Su objetivo principal es resolver las diversas barreras comunicacionales que enfrentan los hospitales, como la dispersión de la información, demoras en la respuesta, falta de trazabilidad, sobrecarga de información y errores por comunicación deficiente.
 
 ## Características
 
-- Multiplataforma (pc, web, movil)
-- Comunicación directa en tiempo real
-- Sistema de prioridades
-- Dashboard de monitoreo para directivos
+*   **Multiplataforma**: La aplicación será accesible desde dispositivos móviles (smartphones, tablets) y computadoras de escritorio.
+*   **Alertas y Notificaciones Inteligentes**: Incluye un sistema de alertas personalizables para emergencias, códigos internos (ej. "Código Azul"), y eventos críticos, con notificaciones push configurables según roles y responsabilidades.
+*   **Directorio de Personal Integrado**: Contará con una base de datos actualizada que incluye información de contacto, rol del personal, función de búsqueda rápida y estado de disponibilidad.
+*   **Perfiles de Usuario y Roles**: Permite un acceso diferenciado a funcionalidades y permisos según el rol del usuario (médico, enfermera, administrativo, etc.), con gestión centralizada de usuarios y permisos.
+*   **Registro y Trazabilidad**: Ofrece un registro de todas las comunicaciones realizadas dentro de la plataforma para fines de auditoría y mejora continua.
+*   **Integración Potencial**: Prevé la integración con sistemas existentes como el historial clínico electrónico (HCE) o sistemas de llamada de enfermería y equipos médicos.
 
+## Tecnologías
 
-## Tecnologias 
+**Cliente**: EJS, Javascript
+ 
+**Servidor**: NodeJS, Express, Websockets 
 
-**Cliente:** EJS, Javascript
+## Variables de Entorno
 
-**Servidor:** Node, Express, WebSockets
+Variables para la conexión con la base de datos
 
-
-## Variables de entorno
-
-Para ejecutar este proyecto localmente, debes cambiar las siguientes variables de entorno para la base de datos por tus credenciales correctas en caso de ser necesario.
-
-`BD_USUARIO = root`
+`BD_USUARIO = "root"`
 
 `BD_CONTRASENA = ""`
 
-`BD_HOST = localhost`
+`BD_HOST = "localhost"`
 
-`BD_PUERTO = 3306`
+`BD_PUERTO = "3306"`
 
-`BD_BASE = hoska`
+`BD_BASE = "hoska"`
 
+---
 
-## Ejecutarlo localmente
+`RONDAS = 5`
+
+`PUERTO_API = 3000`
+
+`PUERTO_WEB = 4000`
+
+`API_URL = "http://localhost:3000/api"`
+
+`JWT_SECRET = "OBLIGATORIO_CAMBIAR"`
+
+## Ejecución Local
 
 Clona el proyecto
 
@@ -40,7 +54,7 @@ Clona el proyecto
   git clone https://github.com/Exaedro/hoska
 ```
 
-Ve a la carpeta del proyecto
+Dirigete a la carpeta del proyecto
 
 ```bash
   cd hoska
@@ -58,11 +72,9 @@ Inicia el servidor
   npm run start
 ```
 
-
 ## Autores
 
-- [@Exaedro](https://www.github.com/Exaedro)
-- [@cristobalmaier](https://www.github.com/cristobalmaier)
-- [@Tzaw14](https://www.github.com/Tzaw14)
-- [@Lesshugaa](https://www.github.com/Lesshugaa)
-- [@Agusicolman06](https://www.github.com/Agusicolman06)
+*   **Sassone Sosa Nahiara**
+*   **Leites Thiago**
+*   **Grippaldi Julián**
+---
